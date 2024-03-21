@@ -980,7 +980,8 @@ namespace TimeLineTool
             DrawHourLines(grid);
             DrawMinuteLines(grid);
         }
-        private void DrawMinuteLines(Canvas grid)
+
+		private void DrawMinuteLines(Canvas grid)
         {
             Double halfHourSize = UnitSize / 2;
             Double fifteenMinSize = UnitSize / 4;
@@ -1102,12 +1103,12 @@ namespace TimeLineTool
 
 
                 DrawIncrementLines(grid, nextDay, firstDayDistance,
-                                    increment, daySize, DayLineBrush, 7);
+                                    increment, daySize, DayLineBrush, 7, 0, true);
             }
 
         }
         private void DrawIncrementLines(Canvas grid, DateTime firstLineDate, Double firstLineDistance,
-                TimeSpan timeStep, Double unitSize, Brush brush, int majorEvery, int majorEveryOffset = 0)
+                TimeSpan timeStep, Double unitSize, Brush brush, int majorEvery, int majorEveryOffset = 0, bool displayDate = false)
         {
             Double curX = firstLineDistance;
             DateTime curDate = firstLineDate;
@@ -1128,11 +1129,24 @@ namespace TimeLineTool
                 l.Y2 = Math.Max(DesiredSize.Height, Height);
                 grid.Children.Add(l);
                 Canvas.SetLeft(l, curX);
+
+                if (displayDate)
+                {
+                    Label lbl = new Label();
+                    lbl.Content = curDate.ToString("dd/MM/yyyy");
+				    grid.Children.Add(lbl);
+				    Canvas.SetLeft(lbl, curX);
+                }
+
                 curX += unitSize;
                 curDate += timeStep;
                 curLine++;
-            }
-        }
+
+
+
+
+			}
+		}
         #endregion
 
         #region mouse enter and leave events
